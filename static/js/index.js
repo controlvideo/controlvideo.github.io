@@ -87,25 +87,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // 检查视频格式是否为MP4
     if (video.canPlayType && video.canPlayType('video/mp4')) {
       // 设置播放速度
-      video.playbackRate = 0.6; // 将播放速度设置为2倍（可以根据需要自行调整）
+      video.playbackRate = 0.8; // 将播放速度设置为2倍（可以根据需要自行调整）
     }
   });
 
   // 监听第一个视频元素的加载事件
   videos[0].addEventListener('loadedmetadata', function() {
     // 获取第一个视频的总时长
-    var duration = this.duration;
+    var currentTime = this.currentTime;
 
     // 遍历每个视频元素并设置播放起始时间
     videos.forEach(function(video) {
       // 检查视频格式是否为 MP4
       if (video.canPlayType && video.canPlayType('video/mp4')) {
         // 设置播放起始时间为 0
-        video.currentTime = 0;
+        video.currentTime = currentTime;
 
         // 播放视频
-        video.play();
+        //video.play();
       }
     });
+  videos[0].play();
   });
 });
