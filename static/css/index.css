@@ -166,7 +166,7 @@ body {
 
 
 .container.demo{
-    max-width:2400px !important;
+    max-width:2200px !important;
     padding-left:15%;
     padding-right:15%;
     width:100%;
@@ -192,8 +192,8 @@ body {
 .demo-caption {
   font-family: 'Segoe Print', sans-serif; /* 设置标题字体 */
   font-weight: bold; /* 加粗字体 */
-  font-size: 20px; /* 设置标题字号 */
-  text-align: right; /* 设置标题靠右对齐 */
+  font-size: 18px; /* 设置标题字号 */
+  text-align: center; /* 设置标题靠右对齐 */
   /* 添加其他样式属性，如颜色、行高等 */
   margin: 5px;
 }
