@@ -1,0 +1,261 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+.dcontrolvideo {
+  font-style: italic; /* 设置斜体 */
+}
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+    width: 120%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+}
+
+.results-carousel .item {
+  overflow: hidden;
+  margin: 24px;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.results-carousel video {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#results-carousel .item .caption {
+  font-family: 'Segoe Print', sans-serif; /* 设置标题字体 */
+  font-weight: bold; /* 加粗字体 */
+  font-size: 18px; /* 设置标题字号 */
+  text-align: center; /* 设置标题居中对齐 */
+  color: unset !important;
+  /* 添加其他样式属性，如颜色、行高等 */
+}
+
+.red-word {
+  color: red;
+}
+
+.black-word {
+  color: black;
+}
+
+.custom-image {
+  width: 130%;
+  object-fit: cover; /* 填充并保持图片纵横比 */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+.container.demo{
+    max-width:2400px !important;
+    padding-left:15%;
+    padding-right:15%;
+    width:100%;
+}
+
+.container.demo .item {
+  max-width: 750px;
+  margin: 10px;
+  border: 1px solid #bbb;
+  border-radius: 0;
+  padding: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.container.demo video {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.demo-caption {
+  font-family: 'Segoe Print', sans-serif; /* 设置标题字体 */
+  font-weight: bold; /* 加粗字体 */
+  font-size: 20px; /* 设置标题字号 */
+  text-align: right; /* 设置标题靠右对齐 */
+  /* 添加其他样式属性，如颜色、行高等 */
+  margin: 5px;
+}
+
+.baseline-caption {
+  font-family: 'Segoe Print', sans-serif; /* 设置标题字体 */
+  font-weight: bold; /* 加粗字体 */
+  font-size: 20px; /* 设置标题字号 */
+  text-align: center; /* 设置标题靠右对齐 */
+  /* 添加其他样式属性，如颜色、行高等 */
+  margin: 5px;
+}
+
+.bottom-text-container {
+  display: flex;
+  justify-content: space-between; /* 将子元素均匀分散对齐 */
+  align-items: flex-end; /* 底部对齐 */
+  padding: 5px; /* 设置容器的内边距，可根据需要调整 */
+  background-color: #f2f2f2; /* 设置容器的背景色，可根据需要调整 */
+  margin-top: -5px;
+}
+
+.bottom-text-group {
+  flex-grow: 1; /* 子元素自动扩展以填充可用空间 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-text-group span {
+  font-size: 15px; /* 设置文字大小，可根据需要调整 */
+}
+
+.divider {
+  border-top: 1px solid #333;
+  margin: 25px 0;
+}
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}

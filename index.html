@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html>
+
+<!-- S head -->
+<!-- <head>：这是 <html> 元素内的子元素，用于包含文档的元数据，比如字符编码声明、标题和外部样式表等。通常不会在网页中直接显示。-->
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ControlVideo: Adding Conditional Control for One Shot Text-to-Video Editing</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<!-- E head -->
+
+<!-- S body 网页主体 -->
+<body>
+
+<!-- S nav 导航 -->
+<!--
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+-->
+<!-- E nav 导航 -->
+
+<!-- S 标题 -->
+<!-- <section class="hero"> 是将 <section> 元素与 CSS 类名 "hero" 关联起来的表示方式。
+  类名 "hero" 可能表示该 <section> 元素是一个英雄区块，通常用于展示页面的引人注目的内容或重要信息。
+  通过使用类名，可以将样式和行为与特定的 <section> 元素关联起来，使其具有独特的外观和功能。
+  为了使类名有效，需要在 CSS 文件中定义相应的样式规则。-->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <!-- 标题 -->
+          <h1 class="title is-1 publication-title">ControlVideo: Adding Conditional Control for One Shot Text-to-Video Editing</h1>
+          <!-- 作者 -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
+            </span>
+          </div>
+          <!-- 作者单位 -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Washington,</span>
+            <span class="author-block"><sup>2</sup>Google Research</span>
+          </div>
+
+          <!-- 链接按钮 -->
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span> 元素用于对文档中的短小文本片段进行标记和包装 -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Demo Link. -->
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fa fa-paint-brush"></i>
+                  </span>
+                  <span>Demo</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- E 标题 -->
+
+<!-- S 预告片 -->
+<!--
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/submit_demo_crop.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">ControlVideo</span> fine-grained and controllable video editing
+      </h2>
+    </div>
+  </div>
+</section>
+-->
+<!-- E 预告片 -->
+
+<!-- S 滑块 -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <!-- Canny -->
+          <video poster="" id="canny1" autoplay muted loop playsinline height="100%" draggable="false">
+            <source src="./static/videos/origin_ours/car11-a%20car,%20Vincent%20van%20Gogh%20style.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a car, <span class="red-word">Vincent van Gogh style</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video poster="" id="canny2" autoplay muted loop playsinline height="100%" draggable="false">
+            <source src="./static/videos/origin_ours/car11-a%20car,%20autumn.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a car, <span class="red-word">autumn</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video poster="" id="canny3" autoplay muted loop playsinline height="100%" draggable="false">
+            <source src="./static/videos/origin_ours/car11-a%20red%20car.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a <span class="red-word">red</span> car
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="canny4" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/girl8-a%20girl,%20red%20hair.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a girl, <span class="red-word">red hair</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="canny5" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/girl8-a%20girl,%20at%20night,%20foggy,%20soft%20cinematic%20lighting.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a girl, <span class="red-word">at night, foggy, soft cinematic lighting</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="canny6" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/girl8-a%20girl,%20Krenz%20Cushart%20style.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a girl, <span class="red-word">Krenz Cushart style</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="canny7" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/building1-a%20wooden%20building,%20at%20night.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a <span class="red-word">wooden</span> building, <span class="red-word">at night</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="canny8" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/demo_swan-a%20black%20swan%20is%20swimming%20in%20a%20river,%20Vincent%20van%20Gogh%20style.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a black swan is swimming in a river, <span class="red-word">Vincent van Gogh style</span>
+          </p>
+        </div>
+          <!-- Pose -->
+        <div class="item item-steve">
+          <video id="pose1" autoplay muted loop playsinline height="100%" >
+            <source src="./static/videos/origin_ours/dance26-Michael%20Jackson%20is%20dancing.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            <span class="red-word">Michael Jackson</span> is dancing
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="pose2" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/dance26-Sherlock%20Holmes%20is%20dancing,%20on%20the%20street%20of%20london,%20raining.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            <span class="red-word">Sherlock Holmes</span> is dancing, <span class="red-word">on the street of london, raining</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="pose3" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/dance9-a%20person%20wearing%20blue%20jeans%20is%20dancing.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a person <span class="red-word">wearing blue jeans</span> is dancing
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="pose4" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/dance9-a%20person%20is%20dancing,%20Makoto%20Shinkai%20style.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a person is dancing, <span class="red-word">Makoto Shinkai style</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="pose5" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/sport11-a%20brown%20bear%20is%20skateboarding.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            <span class="red-word">a brown bear</span> is skateboarding
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="pose6" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/dance5-a%20person%20is%20dancing,%20Makoto%20Shinkai%20style.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a person is dancing, <span class="red-word">Makoto Shinkai style</span>
+          </p>
+        </div>
+          <!-- HED -->
+        <div class="item item-steve">
+          <video id="HED1" autoplay muted loop playsinline height="100%" >
+            <source src="./static/videos/origin_ours/girl3-a%20girl%20with%20red%20hair.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a girl <span class="red-word">with red hair </span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED2" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/girl3-a%20girl,%20Krenz%20Cushart%20style.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a girl, <span class="red-word">Krenz Cushart style</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED3" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/girl7-a%20girl%20with%20golden%20dress.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a girl <span class="red-word">with golden dress</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED4" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/girl7-a%20girl,%20at%20night,%20foggy,%20soft%20cinematic%20lighting.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a girl, <span class="red-word">at night, foggy, soft cinematic lighting</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED5" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/car10-a%20red%20car.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a <span class="red-word">red</span> car
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED6" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/cat4-a%20black%20cat.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a <span class="red-word">black</span> cat
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED7" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/demo_swan-a%20Swarovski%20crystal%20swan%20is%20swimming%20in%20a%20river.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a <span class="red-word">Swarovski crystal</span> swan is swimming in a river
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED8" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/demo_car-a%20jeep%20car%20is%20moving%20on%20the%20road,%20watercolor%20painting.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a jeep car is moving on the road, <span class="red-word">watercolor painting</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED9" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/demo_car-a%20jeep%20car%20is%20moving%20on%20the%20road,%20beautiful%20autumn.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a jeep car is moving on the road, <span class="red-word">beautiful autumn</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="HED10" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/mountain6-a%20man%20on%20a%20snow%20mountain,%20realistic.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a man on a snow <span class="red-word">snow</span> mountain, realistic
+          </p>
+        </div>
+          <!-- Depth -->
+        <div class="item item-steve">
+          <video id="depth1" autoplay muted loop playsinline height="100%" >
+            <source src="./static/videos/origin_ours/back1-the%20back%20view%20of%20a%20woman%20admiring%20beautiful%20sunrising,%20early%20morning.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            the back view of a woman  <span class="red-word">admiring beautiful sunrising, early morning</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="depth2" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/back1-the%20back%20view%20of%20a%20woman,%20Toei%20Animation%20style.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            the back view of a woman, <span class="red-word">Toei Animation style</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="depth3" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/cake2-a%20cake%20with%20romantic%20pure%20red%20candlestick,%20beautifully%20backlit,%20matte%20painting%20concept%20art.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a cake <span class="red-word">with romantic pure red candlestick, beautifully backlit, matte painting concept art</span>
+          </p>
+        </div>
+        <div class="item item-steve">
+          <video id="depth4" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/origin_ours/demo_car-a%20jeep%20car%20car%20is%20moving%20on%20the%20road,%20snowy%20winter.mp4"
+                    type="video/mp4">
+          </video>
+          <p class="caption">
+            a jeep car car is moving on the road, <span class="red-word">snowy winter</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<h2 class="subtitle has-text-centered">
+  <span class="dnerf">ControlVideo</span> fine-grained and controllable video editing
+</h2>
+<!-- E 滑块 -->
+
+<!-- S 摘要 & Video-->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            In this paper, we present <span class="dcontrolvideo">ControlVideo</span>, a pioneering method for text-driven video editing.
+            Leveraging the capabilities of text-to-image diffusion models and ControlNet,
+            ControlVideo aims to enhance the fidelity and temporal consistency of videos that align with a given text while preserving the structure of the source video.
+            This is achieved by incorporating additional conditions such as edge maps,
+            fine-tuning the key-frame and temporal attention on the source video-text pair with carefully designed strategies.
+            An in-depth exploration of ControlVideo's design is conducted to inform future research on one-shot tuning video diffusion models.
+            Quantitatively, ControlVideo outperforms a range of competitive baselines in terms of faithfulness and consistency while still aligning with the textual prompt.
+            Additionally, it delivers videos with high visual realism and fidelity w.r.t. the source content,
+            demonstrating flexibility in utilizing controls containing varying degrees of source video information,
+            and the potential for multiple control combinations.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">Method</h2>
+          <div class="custom-image">
+            <img src="./static/images/figure2-method.png" alt="Our method.">
+          </div>
+      </div>
+    </div>
+    <!--/ Method. -->
+
+    <!-- Paper video. -->
+    <!--
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<!-- S DEMO -->
+<section class="hero is-light is-small">
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-2">Results</h2>
+    </div>
+
+    <!-- HED-1 -->
+    <div class="container demo">
+      <h2 class="title is-3">HED Boundary</h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="HEDgirl3red" autoplay muted loop playsinline height="100%" >
+              <source src="./static/videos/origin_control_ours/girl3-a%20girl%20with%20red%20hair.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ with red hair </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="HEDgirl3style" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/girl3-a%20girl,%20Krenz%20Cushart%20style.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ Krenz Cushart style</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- HED-2-->
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="HEDgirl7golden" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/girl7-a%20girl%20with%20golden%20dress.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ with golden dress</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="HEDgirl7night" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/girl7-a%20girl,%20at%20night,%20foggy,%20soft%20cinematic%20lighting.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ at night, foggy, soft cinematic lighting</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- HED-3-->
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="HEDcar10red" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/car10-a%20red%20car.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a car <span class="red-word">&rarr;</span> a <span class="red-word">red</span> car
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="HEDcat4black" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/cat4-a%20black%20cat.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a cat <span class="red-word">&rarr;</span> a <span class="red-word">black</span> cat
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- HED-4-->
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="HEDswancrystal" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/demo_swan-a%20Swarovski%20crystal%20swan%20is%20swimming%20in%20a%20river.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a swan <span class="red-word">&rarr;</span> a <span class="red-word">Swarovski crystal</span> swan
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="HEDcarwater" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/demo_car-a%20jeep%20car%20is%20moving%20on%20the%20road,%20watercolor%20painting.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ watercolor painting</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Canny-1 -->
+      <h2 class="title is-3">Canny Edge</h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="cannycar11red" autoplay muted loop playsinline height="100%" >
+              <source src="./static/videos/origin_control_ours/car11-a%20red%20car.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a car <span class="red-word">&rarr;</span> a <span class="red-word">red</span> car
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="cannycar11autumn" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/car11-a%20car,%20autumn.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ autumn</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- Canny-2-->
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="cannygirl8red" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/girl8-a%20girl,%20red%20hair.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ with red hair</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="cannygirl8night" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/girl8-a%20girl,%20at%20night,%20foggy,%20soft%20cinematic%20lighting.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ at night, foggy, soft cinematic lighting</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- Canny-3-->
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="cannybuilding" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/building1-a%20wooden%20building,%20at%20night.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a building <span class="red-word">&rarr;</span> a <span class="red-word">wooden</span> building, <span class="red-word">at night</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="cannyswanVG" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/demo_swan-a%20black%20swan%20is%20swimming%20in%20a%20river,%20Vincent%20van%20Gogh%20style.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ Vincent van Gogh style</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Depth-1 -->
+      <h2 class="title is-3">Depth Map</h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="depthback1sun" autoplay muted loop playsinline height="100%" >
+              <source src="./static/videos/origin_control_ours/back1-the%20back%20view%20of%20a%20woman%20admiring%20beautiful%20sunrising,%20early%20morning.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ admiring beautiful sunrising, early morning</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="depthback1style" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/back1-the%20back%20view%20of%20a%20woman,%20Toei%20Animation%20style.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ Toei Animation style</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- Depth-2-->
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="depthcake" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/cake2-a%20cake%20with%20romantic%20pure%20red%20candlestick,%20beautifully%20backlit,%20matte%20painting%20concept%20art.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ with romantic pure red candlestick, beautifully backlit, matte painting concept art</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="depthcar" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/demo_car-a%20jeep%20car%20car%20is%20moving%20on%20the%20road,%20snowy%20winter.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              <span class="red-word">+ snowy winter</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Pose-1 -->
+      <h2 class="title is-3">Human Pose</h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="posedance26MJ" autoplay muted loop playsinline height="100%" >
+              <source src="./static/videos/origin_control_ours/dance26-Michael%20Jackson%20is%20dancing.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a person is dancing <span class="red-word">&rarr;</span> <span class="red-word">Michael Jackson</span> is dancing
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="posedance26SH" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/dance26-Sherlock%20Holmes%20is%20dancing,%20on%20the%20street%20of%20london,%20raining.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a person is dancing <span class="red-word">&rarr;</span> <span class="red-word">Sherlock Holmes</span> is dancing, <span class="red-word">on the street of london, raining</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- Pose-2-->
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <video id="posedance9jeans" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/dance9-a%20person%20wearing%20blue%20jeans%20is%20dancing.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a person is dancing <span class="red-word">&rarr;</span> a person <span class="red-word">wearing blue jeans</span> is dancing
+            </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="item">
+            <video id="posesport" autoplay muted loop playsinline height="100%">
+              <source src="./static/videos/origin_control_ours/sport11-a%20brown%20bear%20is%20skateboarding.mp4"
+                      type="video/mp4">
+            </video>
+            <p class="demo-caption">
+              a person is dancing <span class="red-word">&rarr;</span> <span class="red-word">a brown bear</span> is skateboarding
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 一行多个模块并列 -->
+      <!--
+      <div class="columns is-centered">
+
+        <div class="column">
+          <div class="content">
+            <h2 class="title is-3">Visual Effects</h2>
+            <p>
+              Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+              would be impossible without nerfies since it would require going through a wall.
+            </p>
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/dollyzoom-stacked.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="content">
+            <h2 class="title is-3">Visual Effects</h2>
+            <p>
+              Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+              would be impossible without nerfies since it would require going through a wall.
+            </p>
+            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/dollyzoom-stacked.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <div class="column">
+          <h2 class="title is-3">Matting</h2>
+          <div class="columns is-centered">
+            <div class="column content">
+              <p>
+                As a byproduct of our method, we can also solve the matting problem by ignoring
+                samples that fall outside of a bounding box during rendering.
+              </p>
+              <video id="matting-video" controls playsinline height="100%">
+                <source src="./static/videos/matting.mp4"
+                        type="video/mp4">
+              </video>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      -->
+
+
+      <!-- 一行单个模块 -->
+      <!-- Animation. -->
+      <!--
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Animation</h2>
+
+          <h3 class="title is-4">Interpolating states</h3>
+          <div class="content has-text-justified">
+            <p>
+              We can also animate the scene by interpolating the deformation latent codes of two input
+              frames. Use the slider here to linearly interpolate between the left frame and the right
+              frame.
+            </p>
+          </div>
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-3 has-text-centered">
+              <img src="./static/images/interpolate_start.jpg"
+                   class="interpolation-image"
+                   alt="Interpolate start reference image."/>
+              <p>Start Frame</p>
+            </div>
+            <div class="column interpolation-video-column">
+              <div id="interpolation-image-wrapper">
+                Loading...
+              </div>
+              <input class="slider is-fullwidth is-large is-info"
+                     id="interpolation-slider"
+                     step="1" min="0" max="100" value="0" type="range">
+            </div>
+            <div class="column is-3 has-text-centered">
+              <img src="./static/images/interpolate_end.jpg"
+                   class="interpolation-image"
+                   alt="Interpolation end reference image."/>
+              <p class="is-bold">End Frame</p>
+            </div>
+          </div>
+          <br/>
+
+          <h3 class="title is-4">Re-rendering the input video</h3>
+          <div class="content has-text-justified">
+            <p>
+              Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
+              viewpoint such as a stabilized camera by playing back the training deformations.
+            </p>
+          </div>
+          <div class="content has-text-centered">
+            <video id="replay-video"
+                   controls
+                   muted
+                   preload
+                   playsinline
+                   width="75%">
+              <source src="./static/videos/replay.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </section>
+</section>
+
+<!-- S Comparsions -->
+<section class="section">
+  <!-- HED-1 -->
+  <div class="container demo">
+    <h2 class="title is-3">Comparsions</h2>
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <div class="content">
+          <video id="comparegirl3" autoplay muted loop playsinline height="100%" >
+            <source src="./static/videos/comparison_demo/girl3-a%20girl%20with%20red%20hair.mp4"
+                    type="video/mp4">
+          </video>
+          <div class="bottom-text-container">
+            <div class="bottom-text-group">
+              <span>Source Video</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Ours</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Stable Diffusion</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Tune-A-Video</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>vid2vid-zero</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Video-P2P</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>FateZero</span>
+            </div>
+          </div>
+          <p class="baseline-caption">
+            <span class="red-word">+ with red hair </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  <!-- HED-2-->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <div class="content">
+          <video id="comparegirl7" autoplay muted loop playsinline height="100%">
+            <source src="./static/videos/comparison_demo/girl7_face-a%20girl%20with%20exquisite%20and%20rich%20makeup.mp4"
+                    type="video/mp4">
+          </video>
+          <div class="bottom-text-container">
+            <div class="bottom-text-group">
+              <span>Source Video</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Ours</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Stable Diffusion</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Tune-A-Video</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>vid2vid-zero</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>Video-P2P</span>
+            </div>
+            <div class="bottom-text-group">
+              <span>FateZero</span>
+            </div>
+          </div>
+          <p class="baseline-caption">
+            <span class="red-word">+ with exquisite and rich makeup</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <!-- HED-1 -->
+  <div class="container is-max-desktop">
+    <!-- Concurrent Work. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            There's a lot of excellent work that was introduced around the same time as ours.
+          </p>
+          <p>
+            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
+          </p>
+          <p>
+            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
+            both use deformation fields to model non-rigid scenes.
+          </p>
+          <p>
+            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
+          </p>
+          <p>
+            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+<!-- E body 网页主体 -->
+
+</html>
