@@ -155,7 +155,7 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/google/nerfies"
+                <a href="https://github.com/thu-ml/controlvideo"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -478,15 +478,6 @@
             a cake <span class="red-word">with romantic pure red candlestick, beautifully backlit, matte painting concept art</span>
           </p>
         </div>
-        <div class="item item-steve">
-          <video id="depth4" sync="main-video" autoplay muted loop playsinline height="100%">
-            <source src="./static/videos/origin_ours/demo_car-a%20jeep%20car%20car%20is%20moving%20on%20the%20road,%20snowy%20winter.mp4"
-                    type="video/mp4">
-          </video>
-          <p class="caption">
-            a jeep car car is moving on the road, <span class="red-word">snowy winter</span>
-          </p>
-        </div>
         <!-- new face -->
         <div class="item item-steve">
           <video poster="" id="new2face" sync="main-video" autoplay muted loop playsinline height="100%" draggable="false">
@@ -548,6 +539,15 @@
           <div class="custom-image">
             <img src="./static/images/figure2-method.png" alt="Our method.">
           </div>
+        <div class="content has-text-justified">
+          <p>
+          ControlVideo incorporates visual conditions for all frames to amplify the source video's guidance,
+          key-frame attention that aligns all frames with a selected one and temporal attention modules succeeded by a zero convolutional layer for temporal consistency and faithfulness.
+          The three key components and corresponding fine-tuned parameters are designed by a systematic empirical study.
+          Built upon the trained ControlVideo, during inference, we employ DDIM inversion and then generate the edited video using the target prompt via DDIM sampling.
+          <b>For fair comparisons, following previous works, we sample 8 frames from each video. We also show the edited results with 48 frames</b>.
+          </p>
+        </div>
       </div>
     </div>
     <!--/ Method. -->
@@ -810,11 +810,11 @@
         <div class="column">
           <div class="item">
             <video id="depthcar" sync="main-video" autoplay muted loop playsinline height="100%">
-              <source src="./static/videos/origin_control_ours/demo_car-a%20jeep%20car%20car%20is%20moving%20on%20the%20road,%20snowy%20winter.mp4"
+              <source src="./static/videos/origin_control_ours/ink1-gentle%20green%20ink%20diffuses%20in%20water,%20beautiful%20light.mp4"
                       type="video/mp4">
             </video>
             <p class="demo-caption">
-              <span class="red-word">+ snowy winter</span>
+              ink diffuses in water <span class="red-word">&rarr;</span> <span class="red-word">gentle green</span> ink diffuses in water, <span class="red-word">beautiful light</span>
             </p>
           </div>
         </div>
@@ -1180,7 +1180,7 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
+    <pre><code>@article{2023ControlVideo,
   author    = {Min Zhao and Rongzhen Wang and Fan Bao and Chongxuan Li and Jun Zhu},
   title     = {ControlVideo: Adding Conditional Control for One Shot Text-to-Video Editing},
   journal   = {arXiv},
