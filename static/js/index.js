@@ -100,13 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
     videos.forEach(function(video) {
       // 检查视频格式是否为 MP4
       if (video.canPlayType && video.canPlayType('video/mp4')) {
-        // 设置播放起始时间为 0
-        video.currentTime = currentTime;
-
-        // 播放视频
-        //video.play();
+          if (video.id !== 'long1' && video.id !== 'long2') {
+            video.currentTime = currentTime;
+            video.play();
+          }
       }
     });
-  videos[0].play();
+  //videos[0].play();
   });
 });

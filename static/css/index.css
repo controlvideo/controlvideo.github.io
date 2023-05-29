@@ -175,7 +175,7 @@ body {
 .container.demo .item {
   max-width: 800px;
   margin: 10px;
-  border: 1px solid #bbb;
+  border: 0 solid #bbb;
   border-radius: 0;
   padding: 0;
   background-color: white;
